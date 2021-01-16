@@ -14,20 +14,22 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 
-categories = []
+categories = ['general discussion', 'mimic', 'support', 'mycroft project', 'skill feedback', 'mark ii', 'skill suggestions', 'site feedback', 'adapt intent parser', 'languages', 'feature requests', 'machine learning', 'design', 'openstt']
 global first 
 first = True
 
 def initializedf():
     global first
+    
     df = pd.read_csv("/Users/sachittarora/Documents/GitHub/level1_post_recommender_20/sachitt_arora/cleaneddata.csv")
     df.drop(columns= ['Unnamed: 0'], inplace=True)
 
-    if first == True:
+    # if first == True:
 
-        for i in df['Category'].unique():
-            categories.append(i)
-        first = False
+    #     for i in df['Category'].unique():
+    #         categories.append(i)
+    #     first = False
+
     return df
 
 def multinomial():
@@ -138,7 +140,11 @@ def crossval():
                 ('tfidf', TfidfTransformer()),
                 ('clf', DecisionTreeClassifier(random_state=0)),
                ])
-    cv_res = cross_val_score(sgd, x_train, y_train, cv=10)
+    cv_res = cross_val_score(PL, x_train, y_train, cv=10)
     mean_PL = np.mean(cv_res)
     print(mean_PL)
 
+
+
+findresults()
+#returns about 89% accuracy with decision tree
